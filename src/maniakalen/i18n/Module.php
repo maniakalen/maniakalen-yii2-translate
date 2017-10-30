@@ -13,9 +13,9 @@
 
 namespace maniakalen\i18n;
 
-use maniakalen\y18n\models\Languages;
 use Yii;
 use yii\base\Application;
+use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Module as BaseModule;
 
@@ -30,7 +30,7 @@ use yii\base\Module as BaseModule;
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
  */
-class Module extends BaseModule
+class Module extends BaseModule implements BootstrapInterface
 {
     public $controllerNamespace;
     public $urlRules;

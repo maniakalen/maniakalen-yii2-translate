@@ -11,9 +11,8 @@
  * @link     -
  */
 
-namespace maniakalen\i18n;
+namespace maniakalen\i18n\components;
 
-use Yii;
 /**
  * Class PhpMessageSource
  *

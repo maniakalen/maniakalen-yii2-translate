@@ -13,8 +13,8 @@
 
 namespace maniakalen\i18n\components;
 
-use maniakalen\y18n\models\Languages;
-use maniakalen\y18n\models\Translations;
+use maniakalen\i18n\models\Languages;
+use maniakalen\i18n\models\Translations;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
 
