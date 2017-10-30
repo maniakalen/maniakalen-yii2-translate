@@ -11,9 +11,8 @@
  * @link     $LINK$ $END$
  */
 
-namespace maniakalen\migrations;
 
-class m20171030_1152_create_steps extends \yii\db\Migration
+class m171030_130000_languages extends \yii\db\Migration
 {
     public function up()
     {
