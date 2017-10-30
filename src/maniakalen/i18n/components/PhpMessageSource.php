@@ -38,7 +38,7 @@ class PhpMessageSource extends \yii\i18n\PhpMessageSource
         $this->_translations[] = $translationSource = [
             'category' => $category,
             'language' => $language,
-            'filePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . 'messages.php',
+            'filePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'messages.php',
             ];
         return $translationSource;
     }
