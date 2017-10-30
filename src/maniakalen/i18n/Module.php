@@ -121,9 +121,6 @@ class Module extends BaseModule
             $this->controllerNamespace = '@translations\console\controllers';
         }
 
-        if (Yii::$app->getDb()->getTableSchema(Languages::tableName(), true) === null) {
-            exec(Yii::getAlias('@app/../../yii migrate/up --migrationPath="' . dirname(__FILE__) . DIRECTORY_SEPARATOR . 'migrations"'));
-        }
         return null;
     }
 }
