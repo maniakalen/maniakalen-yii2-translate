@@ -45,14 +45,14 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public function init()
     {
-        parent::init();
+
         Yii::setAlias('@translations', dirname(__FILE__));
         $config = include Yii::getAlias('@translations/config/main.php');
         Yii::configure($this, $config);
         if (!$this->controllerNamespace) {
-            $this->controllerNamespace = Yii::getAlias('@translations\controllers');
+            $this->controllerNamespace = 'translations/controllers';
         }
-
+        parent::init();
         $this->prepareEvents();
         $this->prepareContainer();
 
@@ -118,7 +118,7 @@ class Module extends BaseModule implements BootstrapInterface
             $app->setComponents($this->components);
         }
         if ($app instanceof \yii\console\Application) {
-            $this->controllerNamespace = 'translations\console\controllers';
+            $this->controllerNamespace = 'translations/console/controllers';
         }
 
         return null;
