@@ -118,7 +118,7 @@ class Module extends BaseModule implements BootstrapInterface
             $app->setComponents($this->components);
         }
         if ($app instanceof \yii\console\Application) {
-            $this->controllerNamespace = '@translations\console\controllers';
+            $this->controllerNamespace = 'translations\console\controllers';
         }
 
         return null;
