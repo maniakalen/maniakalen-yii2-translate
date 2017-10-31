@@ -2,13 +2,13 @@
 /**
  * PHP Version 5.5
  *
- *  DESCRIPTION 
+ *  Yii2 Database translation module
  *
- * @category Category 
- * @package  Package 
+ * @category I18n
+ * @package  maniakalen\i18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
- * @link     LINK 
+ * @link     -
  */
 
 namespace maniakalen\i18n;
@@ -22,10 +22,10 @@ use yii\base\Module as BaseModule;
 /**
  * Class Module
  *
- *  CLASSDESCRIPTION
+ *  Yii2 Database translation module definition.
  *
- * @category CATEGORY
- * @package  PACKAGE
+ * @category I18n
+ * @package  maniakalen\i18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -

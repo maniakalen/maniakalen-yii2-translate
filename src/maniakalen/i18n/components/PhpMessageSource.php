@@ -26,25 +26,27 @@ namespace maniakalen\i18n\components;
  */
 class PhpMessageSource extends \yii\i18n\PhpMessageSource
 {
-    private $_translations = [];
     /**
-     * @param string $category
-     * @param string $language
+     * Method to prepare the translation configuration to be loaded for the currently running session
+     *
+     * @param string $category the translation category
+     * @param string $language the translation language
      *
      * @return array
      */
     protected function getMessageFilePath($category, $language)
     {
-        $this->_translations[] = $translationSource = [
+        return [
             'category' => $category,
             'language' => $language,
             'filePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'messages.php',
-            ];
-        return $translationSource;
+        ];
     }
 
     /**
-     * @param array $messageFile
+     * Loads the messages for the provided translation configuration
+     *
+     * @param array $messageFile the configuration for the translation group
      *
      * @return array|mixed|null
      */
@@ -61,8 +63,8 @@ class PhpMessageSource extends \yii\i18n\PhpMessageSource
             }
 
             return $messages;
-        } else {
-            return null;
         }
+
+        return null;
     }
 }
