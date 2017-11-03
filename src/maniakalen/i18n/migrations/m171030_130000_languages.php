@@ -2,13 +2,13 @@
 /**
  * PHP Version 5.5
  *
- *  $DESCRIPTION$ $END$
+ *  Yii2 migration class
  *
- * @category $Category$ $END$
- * @package  $Package$ $END$
+ * @category migrations
+ * @package  Maniakalen_I18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
- * @link     $LINK$ $END$
+ * @link     -
  */
 
 

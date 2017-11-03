@@ -5,7 +5,7 @@
  *  Yii2 Database translation module
  *
  * @category I18n
- * @package  maniakalen\i18n
+ * @package  Maniakalen_I18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
@@ -25,7 +25,7 @@ use yii\base\Module as BaseModule;
  *  Yii2 Database translation module definition.
  *
  * @category I18n
- * @package  maniakalen\i18n
+ * @package  Maniakalen_I18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
@@ -45,14 +45,14 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public function init()
     {
-
         Yii::setAlias('@translations', dirname(__FILE__));
         $config = include Yii::getAlias('@translations/config/main.php');
         Yii::configure($this, $config);
         if (!$this->controllerNamespace) {
-            $this->controllerNamespace = 'translations/controllers';
+            $this->controllerNamespace = 'maniakalen\i18n\controllers';
         }
         parent::init();
+
         $this->prepareEvents();
         $this->prepareContainer();
 
@@ -61,6 +61,16 @@ class Module extends BaseModule implements BootstrapInterface
             Yii::$app->setAliases($config['aliases']);
         }
         return null;
+    }
+
+    /**
+     * Overrides the default method in order to use the correct alias
+     *
+     * @return bool|string
+     */
+    public function getControllerPath()
+    {
+        return Yii::getAlias('@translations/controllers');
     }
 
     /**
@@ -118,7 +128,7 @@ class Module extends BaseModule implements BootstrapInterface
             $app->setComponents($this->components);
         }
         if ($app instanceof \yii\console\Application) {
-            $this->controllerNamespace = 'translations/console/controllers';
+            $this->controllerNamespace = 'maniakalen\i18n\console\controllers';
         }
 
         return null;

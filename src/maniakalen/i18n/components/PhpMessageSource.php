@@ -5,7 +5,7 @@
  *  Messages translation source from database
  *
  * @category Translations
- * @package  maniakalen\i18n
+ * @package  Maniakalen_I18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
@@ -19,7 +19,7 @@ namespace maniakalen\i18n\components;
  *  Messages translation source from database
  *
  * @category Translations
- * @package  maniakalen\i18n
+ * @package  Maniakalen_I18n
  * @author   Peter Georgiev <peter.georgiev@concatel.com>
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
@@ -57,7 +57,7 @@ class PhpMessageSource extends \yii\i18n\PhpMessageSource
         if (is_file($messageFile)) {
             unset($translation['filePath']);
             extract($translation, EXTR_OVERWRITE);
-            $messages = include($messageFile);
+            $messages = include $messageFile;
             if (!is_array($messages)) {
                 $messages = [];
             }
