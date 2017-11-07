@@ -29,17 +29,11 @@ use yii\helpers\ArrayHelper;
  * @property integer $language_id
  * @property string $text
  *
- * @property Translations $translation
+ * @property SourceMessage $translation
  * @property Languages $language
  */
-class TranslationsTexts extends \yii\db\ActiveRecord
+class Message extends \yii\db\ActiveRecord
 {
-    /**
-     * A property to contain the language code corresponding to the language assigned
-     *
-     * @var string $languageCode the code of language to be assigned to
-     */
-    public $languageCode;
 
     /**
      * Returns the table name assigned to this ActiveRecord
@@ -48,7 +42,7 @@ class TranslationsTexts extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'translations_texts';
+        return '{{%message}}';
     }
 
     /**
@@ -59,22 +53,23 @@ class TranslationsTexts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['translation_id', 'language_id'], 'required'],
-            [['translation_id', 'language_id'], 'integer'],
-            [['text'], 'string'],
+            [['id', 'language'], 'required'],
+            [['id'], 'integer'],
+            [['language'], 'string', 'max' => 16],
+            [['translation'], 'string'],
             [
-                ['translation_id'],
+                ['id'],
                 'exist',
                 'skipOnError' => true,
-                'targetClass' => Translations::className(),
-                'targetAttribute' => ['translation_id' => 'id']
+                'targetClass' => SourceMessage::className(),
+                'targetAttribute' => ['id' => 'id']
             ],
             [
-                ['language_id'],
+                ['language'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Languages::className(),
-                'targetAttribute' => ['language_id' => 'id']
+                'targetAttribute' => ['language' => 'language_code']
             ],
         ];
     }
@@ -88,9 +83,8 @@ class TranslationsTexts extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'translation_id' => 'Translation ID',
-            'language_id' => 'Language ID',
-            'text' => 'Text',
+            'language' => 'Language',
+            'translation' => 'Translation',
         ];
     }
 
@@ -99,9 +93,9 @@ class TranslationsTexts extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTranslation()
+    public function getMessageSource()
     {
-        return $this->hasOne(Translations::className(), ['id' => 'translation_id']);
+        return $this->hasOne(SourceMessage::className(), ['id' => 'id']);
     }
 
     /**
@@ -109,23 +103,8 @@ class TranslationsTexts extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getLanguage()
+    public function getLanguageItem()
     {
-        return $this->hasOne(Languages::className(), ['id' => 'language_id']);
-    }
-
-    /**
-     * Gets the language code corresponding to the current record's language_id
-     *
-     * @return string
-     */
-    public function getLanguageCode()
-    {
-        static $langs;
-        if ($langs === null) {
-            $langs = ArrayHelper::map(Languages::find()->all(), 'id', 'language_code');
-        }
-
-        return isset($langs[$this->language_id])?$langs[$this->language_id]:'';
+        return $this->hasOne(Languages::className(), ['language_code' => 'language']);
     }
 }
