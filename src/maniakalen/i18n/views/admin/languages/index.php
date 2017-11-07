@@ -14,6 +14,7 @@
  * @var \yii\base\Model $searchModel
  * @var array $columns
  */
+echo \maniakalen\widgets\Flash::widget();
 
 echo \yii\grid\GridView::widget(
     [

@@ -12,6 +12,8 @@
  *
  * @var \yii\base\Model $model
  */
+
+echo \maniakalen\widgets\Flash::widget();
 ?>
 <div class="col-md-4">
 <?php

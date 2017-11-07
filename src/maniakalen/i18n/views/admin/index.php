@@ -10,6 +10,7 @@
  * @license  GNU GENERAL PUBLIC LICENSE https://www.gnu.org/licenses/gpl.html
  * @link     -
  */
+    echo \maniakalen\widgets\Flash::widget();
 
     echo \yii\helpers\Html::a(
         Yii::t('yii', 'Configure languages'),
