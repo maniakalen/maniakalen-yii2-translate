@@ -13,6 +13,7 @@
 
 namespace maniakalen\i18n\components;
 
+use maniakalen\i18n\models\SourceMessage;
 use yii\grid\ActionColumn;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
@@ -42,7 +43,7 @@ class TranslationsAdminManager
      */
     public function getTranslationModel($params = [])
     {
-        $translation = Yii::createObject(['class' => 'maniakalen\i18n\models\Translations']);
+        $translation = Yii::createObject(['class' => 'maniakalen\i18n\models\SourceMessage']);
         if (!empty($params)) {
             Yii::configure($translation, $params);
         }
@@ -72,7 +73,7 @@ class TranslationsAdminManager
         return [
             ['class' => SerialColumn::className()],
             'category',
-            'label',
+            'message',
             [
                 'class' => ActionColumn::className(),
                 'template' => '<div class="icoBox">{update}&nbsp;{delete}</div>',
@@ -80,19 +81,43 @@ class TranslationsAdminManager
                     'update' => function ($url, $model) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil"></span>',
-                            Url::to(['/translations/admin/translations-update', 'id' => $model->id]),
+                            $this->getTranslationEditUrl($model),
                             []
                         );
                     },
                     'delete' => function ($url, $model) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-trash"></span>',
-                            Url::to(['/translations/admin/translations-delete', 'id' => $model->id]),
+                            $this->getTranslationDeleteUrl($model),
                             []
                         );
                     },
                 ],
             ]
         ];
+    }
+
+    /**
+     * Returns url for the model's edit page in admin UI
+     *
+     * @param SourceMessage $model the model for which to generate url
+     *
+     * @return string
+     */
+    public function getTranslationEditUrl(SourceMessage $model)
+    {
+        return Url::to(['/translations/admin/translations-update', 'trans_id' => $model->id]);
+    }
+
+    /**
+     * Returns url for the model's delete action in admin UI
+     *
+     * @param SourceMessage $model the model for which to generate url
+     *
+     * @return string
+     */
+    public function getTranslationDeleteUrl(SourceMessage $model)
+    {
+        return Url::to(['/translations/admin/translations-delete', 'trans_id' => $model->id]);
     }
 }

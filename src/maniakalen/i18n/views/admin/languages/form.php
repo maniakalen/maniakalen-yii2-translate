@@ -12,14 +12,15 @@
  *
  * @var \yii\base\Model $model
  */
-
+?>
+<div class="col-md-4">
+<?php
 $form = \yii\widgets\ActiveForm::begin();
 echo $form->field($model, 'language_code')->textInput();
 echo $form->field($model, 'language')->textInput();
 echo $form->field($model, 'status')->dropDownList([1=> 'Active', 0 => 'Disabled']);
 echo \yii\helpers\Html::submitInput(Yii::t('yii', 'Submit'), ['class' => 'btn btn-primary']);
 $form::end();
-
 ?>
-
+</div>
 

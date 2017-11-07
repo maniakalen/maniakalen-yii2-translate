@@ -28,5 +28,17 @@ return [
         'translations/admin/languages' => 'translations/admin/languages',
         'translations/admin/languages-update' => 'translations/admin/languages-update',
         'translations/admin/languages-add' => 'translations/admin/languages-add',
+        'translations/admin/languages-delete' => 'translations/admin/languages-delete',
+    ],
+    'container' => [
+        'definitions' => [
+            'yii\console\controllers\MigrateController' => [
+                'class' => 'yii\console\controllers\MigrateController',
+                'migrationPath' => [
+                    '@yii/i18n/migrations',
+                    '@translations/migrations'
+                ]
+            ]
+        ]
     ]
 ];

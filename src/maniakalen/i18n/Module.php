@@ -18,6 +18,7 @@ use yii\base\Application;
 use yii\base\BootstrapInterface;
 use yii\base\Event;
 use yii\base\Module as BaseModule;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class Module
@@ -102,7 +103,7 @@ class Module extends BaseModule implements BootstrapInterface
     {
         if (!empty($this->container)) {
             if (isset($this->container['definitions'])) {
-                $definitions = array_merge(Yii::$container->getDefinitions(), $this->container['definitions']);
+                $definitions = ArrayHelper::merge(Yii::$container->getDefinitions(), $this->container['definitions']);
                 Yii::$container->setDefinitions($definitions);
             }
         }

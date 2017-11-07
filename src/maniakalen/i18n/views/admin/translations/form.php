@@ -12,38 +12,26 @@
  *
  * @var \yii\base\Model $model
  */
-
-$form = \yii\widgets\ActiveForm::begin();
+use yii\bootstrap\Tabs;
+use yii\widgets\ActiveForm;
+?>
+<div class="col-md-4">
+<?php
+$form = ActiveForm::begin();
 echo $form->field($model, 'category')->textInput();
-echo $form->field($model, 'label')->textInput();
+echo $form->field($model, 'message')->textInput();
 
-$langs = $model->translationsTexts;
-if (!empty($langs)) {
-    ?>
-    <div>
-
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-            <?php foreach ($langs as $lang): ?>
-                <li role="presentation" class="<?php echo $ah = isset($ah) ? '' : 'active'; ?>"><a
-                            href="#translation<?php echo $lang->language_id; ?>"
-                            aria-controls="translation<?php echo $lang->language_id; ?>" role="tab"
-                            data-toggle="tab"><?php echo strtoupper($lang->languageCode); ?></a></li>
-            <?php endforeach ?>
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <?php foreach ($langs as $lang): ?>
-                <div role="tabpanel" class="tab-pane <?php echo $ab = isset($ab) ? '' : 'active'; ?>"
-                     id="translation<?php echo $lang->language_id; ?>">
-                    <?php echo $form->field($lang, "[{$lang->id}]text")->textarea(); ?>
-                </div>
-            <?php endforeach ?>
-        </div>
-
-    </div>
-    <?php
+$messages = $model->allMessages;
+$tabs = [];
+foreach ($messages as $msg) {
+    $tabs[] = [
+        'label' => strtoupper($msg->language),
+        'content' => $form->field($msg, "[{$msg->language}]translation")->textarea(),
+        'active' => empty($tabs)
+    ];
 }
+echo Tabs::widget(['items' => $tabs]);
 echo \yii\helpers\Html::submitInput(Yii::t('yii', 'Submit'), ['class' => 'btn btn-primary']);
 $form::end();
+?>
+</div>

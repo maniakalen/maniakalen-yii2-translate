@@ -13,6 +13,7 @@
 
 namespace maniakalen\i18n\components;
 
+use maniakalen\i18n\models\Languages;
 use yii\base\Component;
 use Yii;
 use yii\grid\ActionColumn;
@@ -92,14 +93,14 @@ class LanguagesAdminManager extends Component
                     'update' => function ($url, $model) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil"></span>',
-                            Url::to(['/translations/admin/languages-update', 'id' => $model->id]),
+                            $this->getLanguageEditUrl($model),
                             []
                         );
                     },
                     'delete' => function ($url, $model) {
                         return Html::a(
                             '<span class="glyphicon glyphicon-trash"></span>',
-                            Url::to(['/translations/admin/languages-delete', 'id' => $model->id]),
+                            $this->getLanguageDeleteUrl($model),
                             []
                         );
                     },
@@ -118,12 +119,48 @@ class LanguagesAdminManager extends Component
                         ];
                         return Html::a(
                             '<span class="glyphicon ' . $class . '"></span>',
-                            Url::to(['/translations/admin/languages-status-toggle', 'id' => $model->id]),
+                            $this->getLanguageStatusToggleUrl($model),
                             $options
                         );
                     },
                 ],
             ]
         ];
+    }
+
+    /**
+     * Returns url for the model's edit page in admin UI
+     *
+     * @param Languages $model the model for which to generate url
+     *
+     * @return string
+     */
+    public function getLanguageEditUrl(Languages $model)
+    {
+        return Url::to(['/translations/admin/languages-update', 'lang_id' => $model->id]);
+    }
+
+    /**
+     * Returns url for the model's delete action in admin UI
+     *
+     * @param Languages $model the model for which to generate url
+     *
+     * @return string
+     */
+    public function getLanguageDeleteUrl(Languages $model)
+    {
+        return Url::to(['/translations/admin/languages-delete', 'lang_id' => $model->id]);
+    }
+
+    /**
+     * Returns url for the model's status toggle action in admin UI
+     *
+     * @param Languages $model the model for which to generate url
+     *
+     * @return string
+     */
+    public function getLanguageStatusToggleUrl(Languages $model)
+    {
+        return Url::to(['/translations/admin/languages-status-toggle', 'lang_id' => $model->id]);
     }
 }

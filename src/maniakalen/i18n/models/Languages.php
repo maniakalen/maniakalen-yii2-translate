@@ -31,37 +31,10 @@ use yii\db\AfterSaveEvent;
  * @property string $language
  * @property integer $status
  *
- * @property Translations[] $translations
+ * @property Message[] $messages
  */
 class Languages extends \yii\db\ActiveRecord
 {
-    /**
-     * Initialization method
-     *
-     * @return null
-     */
-    public function init()
-    {
-        parent::init();
-        $this->on(
-            self::EVENT_AFTER_INSERT,
-            function (AfterSaveEvent $event) {
-                $owner = $event->sender;
-                foreach (Translations::find()->all() as $translation) {
-                    \Yii::createObject(
-                        [
-                            'class' => 'maniakalen\i18n\models\TranslationsTexts',
-                            'language_id' => $owner->id,
-                            'translation_id' => $translation->id
-                        ]
-                    )->save();
-                }
-            }
-        );
-
-        return null;
-    }
-
     /**
      * Returns table name of the table associated
      *
@@ -69,7 +42,7 @@ class Languages extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'languages';
+        return '{{%languages}}';
     }
 
     /**
@@ -107,9 +80,9 @@ class Languages extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTranslations()
+    public function getMessages()
     {
-        return $this->hasMany(Translations::className(), ['language_id' => 'id']);
+        return $this->hasMany(Message::className(), ['language' => 'language_code']);
     }
 
     /**

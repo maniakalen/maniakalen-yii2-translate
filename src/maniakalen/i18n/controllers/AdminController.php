@@ -14,9 +14,12 @@
 namespace maniakalen\i18n\controllers;
 
 use maniakalen\i18n\models\Languages;
+use maniakalen\i18n\models\Message;
+use maniakalen\i18n\models\SourceMessage;
 use maniakalen\i18n\models\Translations;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
+use yii\i18n\MessageSource;
 use yii\web\Controller;
 use Yii;
 /**
@@ -74,6 +77,11 @@ class AdminController extends Controller
                         ],
                         'allow' => true,
                         'roles' => ['backend/languages/edit'],
+                    ],
+                    [
+                        'actions' => ['translations'],
+                        'allow' => true,
+                        'roles' => ['backend/translations/access'],
                     ],
                     [
                         'actions' => [
@@ -221,7 +229,7 @@ class AdminController extends Controller
         /**
          * Translations model fetched for admin manager
          *
-         * @var Translations $model
+         * @var MessageSource $model
          */
         $model = Yii::$app->translationsAdmin->findTranslation();
         return $this->render(
@@ -256,26 +264,24 @@ class AdminController extends Controller
         /**
          * Translations model fetched for admin manager
          *
-         * @var Translations $model
+         * @var SourceMessage $model
          */
         $model = Yii::$app->translationsAdmin->findTranslation($trans_id);
-
         if ($post = Yii::$app->request->post()) {
             if ($model->load($post) && $model->save()) {
-                if (isset($post['TranslationsTexts']) && !empty($post['TranslationsTexts'])) {
-                    foreach ($model->translationsTexts as $langModel) {
-                        if ($langModel->id && isset($post['TranslationsTexts'][$langModel->id])) {
-                            $postItem = $post['TranslationsTexts'][$langModel->id];
-                            if ($langModel->load($postItem, '') && $langModel->save()) {
-                                Yii::$app->session->setFlash('success', 'Language saved successfully');
-                                Yii::$app->response->redirect(Url::to(['/translations/admin/translations']));
-                            }
+                if (isset($post['Message']) && !empty($post['Message'])) {
+                    $saves = true;
+                    foreach ($post['Message'] as $lang_code => $data) {
+                        $messageModel = $model->getMessageForLanguage($lang_code);
+                        if ($messageModel instanceof Message) {
+                            $saves = $messageModel->load($data, '') && $messageModel->save() && $saves;
                         }
                     }
+                    if ($saves) {
+                        Yii::$app->session->addFlash('success', Yii::t('yii', 'Translation saved successfully'));
+                    }
                 } else {
-                    Yii::$app->response->redirect(
-                        Url::to(['/translations/admin/translations-update', 'id' => $model->id])
-                    );
+                    Yii::$app->response->redirect(Yii::$app->translationsAdmin->getTranslationEditUrl($model));
                 }
             }
         }
@@ -295,7 +301,7 @@ class AdminController extends Controller
         /**
          * Translations model fetched for admin manager
          *
-         * @var Translations $model
+         * @var SourceMessage $model
          */
         $model = Yii::$app->translationsAdmin->findTranslation($trans_id);
         if ($model->delete()) {
@@ -303,6 +309,6 @@ class AdminController extends Controller
         } else {
             Yii::$app->session->setFlash('danger', 'Failed to delete translation');
         }
-        Yii::$app->response->redirect(Url::to(['/translations/admin/translations']));
+        return Yii::$app->response->redirect(Yii::$app->translationsAdmin->getTranslationDeleteUrl($model));
     }
 }
