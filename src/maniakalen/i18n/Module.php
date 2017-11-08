@@ -75,6 +75,48 @@ class Module extends BaseModule implements BootstrapInterface
     }
 
     /**
+     * Bootstrap method to be called during application bootstrap stage.
+     *
+     * @param Application $app the application currently running
+     *
+     * @return null
+     */
+    public function bootstrap($app)
+    {
+        if ($app instanceof \yii\web\Application) {
+            if (is_array($this->urlRules) && !empty($this->urlRules)) {
+                $app->getUrlManager()->addRules($this->urlRules, true);
+            }
+        }
+        if (is_array($this->components) && !empty($this->components)) {
+            $app->setComponents($this->components);
+        }
+        if ($app instanceof \yii\console\Application) {
+            $this->controllerNamespace = 'maniakalen\i18n\console\controllers';
+        }
+
+        $this->registerTranslations();
+
+        return null;
+    }
+
+    /**
+     * Registers the translation file for the module
+     *
+     * @return null
+     */
+    protected function registerTranslations()
+    {
+        foreach (Yii::$app->translationsAdmin->getTranslationCategories() as $category) {
+            Yii::$app->i18n->translations[$category] = [
+                'class' => 'yii\i18n\DbMessageSource',
+            ];
+        }
+
+        return null;
+    }
+
+    /**
      * Protected method to register events defined in config
      *
      * @return null
@@ -106,30 +148,6 @@ class Module extends BaseModule implements BootstrapInterface
                 $definitions = ArrayHelper::merge(Yii::$container->getDefinitions(), $this->container['definitions']);
                 Yii::$container->setDefinitions($definitions);
             }
-        }
-
-        return null;
-    }
-
-    /**
-     * Bootstrap method to be called during application bootstrap stage.
-     *
-     * @param Application $app the application currently running
-     *
-     * @return null
-     */
-    public function bootstrap($app)
-    {
-        if ($app instanceof \yii\web\Application) {
-            if (is_array($this->urlRules) && !empty($this->urlRules)) {
-                $app->getUrlManager()->addRules($this->urlRules, true);
-            }
-        }
-        if (is_array($this->components) && !empty($this->components)) {
-            $app->setComponents($this->components);
-        }
-        if ($app instanceof \yii\console\Application) {
-            $this->controllerNamespace = 'maniakalen\i18n\console\controllers';
         }
 
         return null;

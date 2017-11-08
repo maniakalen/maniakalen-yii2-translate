@@ -14,11 +14,13 @@
 namespace maniakalen\i18n\components;
 
 use maniakalen\i18n\models\SourceMessage;
+use yii\db\ActiveRecord;
 use yii\grid\ActionColumn;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class TranslationsAdminManager
@@ -61,6 +63,22 @@ class TranslationsAdminManager
     {
         $translation = $this->getTranslationModel();
         return $id?$translation::findOne($id):$translation;
+    }
+
+    /**
+     * Returns a list of all available categories for translation
+     *
+     * @return array
+     */
+    public function getTranslationCategories()
+    {
+        $model = $this->getTranslationModel();
+        if ($model instanceof ActiveRecord) {
+            $list = $model::find()->groupBy('category')->all();
+            return ArrayHelper::getColumn($list, 'category');
+        }
+
+        return [];
     }
 
     /**

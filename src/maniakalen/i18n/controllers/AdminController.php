@@ -279,10 +279,12 @@ class AdminController extends Controller
                     }
                     if ($saves) {
                         Yii::$app->session->addFlash('success', Yii::t('yii', 'Translation saved successfully'));
+                    } else {
+                        Yii::$app->session->addFlash('success', Yii::t('yii', 'Translation saved partially.'));
                     }
-                } else {
-                    Yii::$app->response->redirect(Yii::$app->translationsAdmin->getTranslationEditUrl($model));
                 }
+                Yii::$app->response->redirect(Yii::$app->translationsAdmin->getTranslationEditUrl($model));
+
             }
         }
 
