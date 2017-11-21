@@ -18,9 +18,7 @@ Then you will need to run the module migrations
 
     yii migrate/up --migrationPath="@translations/migrations/"
     
-And finally you will need to define a translation source like:
-
-    '<category>' => ['class' => 'maniakalen\i18n\components\PhpMessageSource']
+The categories are automatically registered in the translation system when module is bootstrapped.   
     
 In project when you have translations in database you can retreive by using:
 
