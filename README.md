@@ -2,7 +2,7 @@
 PHP db translations engine
 
 
-The package is also available in packagist: "maniakalen/yii2-translations"
+The package is also available in packagist: "maniakalen/yii2-dbtranslate"
 
 To enable the module inside the yii2 you need to define the module in the main config module part:
 
