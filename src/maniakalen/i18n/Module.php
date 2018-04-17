@@ -94,8 +94,8 @@ class Module extends BaseModule implements BootstrapInterface
     public function bootstrap($app)
     {
         if ($app instanceof \yii\web\Application) {
-            if (is_array($this->urlRules) && !empty($this->urlRules)) {
-                $app->getUrlManager()->addRules($this->urlRules, true);
+            if ($this->group && isset($this->urlRules[$this->group]) && is_array($this->urlRules[$this->group]) && !empty($this->urlRules[$this->group])) {
+                $app->getUrlManager()->addRules($this->urlRules[$this->group], true);
             }
         }
         if (is_array($this->components) && !empty($this->components)) {
