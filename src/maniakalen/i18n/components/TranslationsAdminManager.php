@@ -72,12 +72,15 @@ class TranslationsAdminManager
      */
     public function getTranslationCategories()
     {
-        $model = $this->getTranslationModel();
-        if ($model instanceof ActiveRecord) {
-            $list = $model::find()->groupBy('category')->all();
-            return ArrayHelper::getColumn($list, 'category');
+        try {
+            $model = $this->getTranslationModel();
+            if ($model instanceof ActiveRecord) {
+                $list = $model::find()->groupBy('category')->all();
+                return ArrayHelper::getColumn($list, 'category');
+            }
+        } catch (\Exception $ex) {
+            Yii::error($ex->getMessage(), 'translations');
         }
-
         return [];
     }
 

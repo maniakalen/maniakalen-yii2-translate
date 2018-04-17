@@ -297,6 +297,9 @@ class AdminController extends Controller
      * @param int $trans_id id of translation to be deleted
      *
      * @return null
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionTranslationsDelete($trans_id)
     {

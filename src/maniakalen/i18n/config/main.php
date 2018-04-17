@@ -24,11 +24,16 @@ return [
         ]
     ],
     'urlRules' => [
-        'translations/admin/index' => 'translations/admin/index',
-        'translations/admin/languages' => 'translations/admin/languages',
-        'translations/admin/languages-update' => 'translations/admin/languages-update',
-        'translations/admin/languages-add' => 'translations/admin/languages-add',
-        'translations/admin/languages-delete' => 'translations/admin/languages-delete',
+        \maniakalen\i18n\Module::RULE_GROUP_BACKEND => [
+            'translations/admin/index' => '{module}/admin/index',
+            'translations/admin/languages' => '{module}/admin/languages',
+            'translations/admin/languages-update' => '{module}/admin/languages-update',
+            'translations/admin/languages-add' => '{module}/admin/languages-add',
+            'translations/admin/languages-delete' => '{module}/admin/languages-delete',
+        ],
+        \maniakalen\i18n\Module::RULE_GROUP_FRONTEND => [
+            'translations/json' => '{module}/translations/json'
+        ]
     ],
     'container' => [
         'definitions' => [

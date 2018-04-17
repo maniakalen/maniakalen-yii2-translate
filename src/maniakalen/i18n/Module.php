@@ -33,19 +33,29 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends BaseModule implements BootstrapInterface
 {
+
+    const RULE_GROUP_FRONTEND = 'frontend';
+    const RULE_GROUP_BACKEND = 'backend';
+
     public $controllerNamespace;
     public $urlRules;
     public $events;
     public $container;
     public $components;
+    public $group;
 
     /**
      * Module initialisation
      *
      * @return null
+     * @throws \ErrorException
      */
     public function init()
     {
+        if (defined('MANIAKALEN_I18N_TRANSLATE')) {
+            throw new \ErrorException("Trying to redefine translation module");
+        }
+        define('MANIAKALEN_I18N_TRANSLATE', 1);
         Yii::setAlias('@translations', dirname(__FILE__));
         $config = include Yii::getAlias('@translations/config/main.php');
         Yii::configure($this, $config);
@@ -151,5 +161,37 @@ class Module extends BaseModule implements BootstrapInterface
         }
 
         return null;
+    }
+    /**
+     * @param \yii\web\Application $app
+     *
+     * @return null
+     * @throws \InvalidArgumentException
+     */
+    public function registerRoutes(\yii\web\Application $app)
+    {
+        if (!$this->group) {
+            throw new \InvalidArgumentException("Missing route group config");
+        }
+        if (is_array($this->group)) {
+            foreach ($this->group as $group) {
+                $this->registerRoutesByGroup($app, $group);
+            }
+        } else if (is_string($this->group)) {
+            $this->registerRoutesByGroup($app, $this->group);
+        }
+        return true;
+    }
+
+    private function registerRoutesByGroup(\yii\web\Application $app, $groupLabel)
+    {
+        if (isset($this->urlRules[$groupLabel]) && !empty($this->urlRules[$groupLabel])) {
+            $group = $this->urlRules[$groupLabel];
+            $id = $this->id;
+            foreach ($group as $url => $route) {
+                $group[$url] = str_replace('{module}', $id, $route);
+            }
+            $app->getUrlManager()->addRules($group, true);
+        }
     }
 }
