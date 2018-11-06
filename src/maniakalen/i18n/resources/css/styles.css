@@ -1,0 +1,13 @@
+.main-menu .menu-item-i18n ul {
+    display: none;
+    background-color: black;
+    height: auto;
+}
+
+.main-menu .menu-item-i18n:hover ul {
+    display: block;
+}
+
+.main-menu .menu-item-i18n ul li {
+    float: none;
+}
