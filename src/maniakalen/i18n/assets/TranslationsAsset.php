@@ -9,6 +9,8 @@
 namespace maniakalen\i18n\assets;
 
 
+use yii\web\AssetBundle;
+
 class TranslationsAsset  extends AssetBundle
 {
     public $sourcePath = '@translations/resources';
