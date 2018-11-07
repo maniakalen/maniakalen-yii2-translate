@@ -38,7 +38,9 @@ class TranslationsController extends Controller
 
     public function actionJson()
     {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
-        return \Yii::$app->translationsManager->getCurrentMessages();
+        \Yii::$app->response->format = Response::FORMAT_RAW;
+        return 'var maniakalen = maniakalen || {}; maniakalen.translations = maniakalen.translations || {
+            data: ' . json_encode(\Yii::$app->translationsManager->getCurrentMessages(), JSON_UNESCAPED_UNICODE) . '
+        };';
     }
 }
