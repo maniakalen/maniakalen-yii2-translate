@@ -21,7 +21,8 @@ return [
         ],
         'translationsAdmin' => [
             'class' => 'maniakalen\i18n\components\TranslationsAdminManager',
-        ]
+        ],
+
     ],
     'urlRules' => [
         \maniakalen\i18n\Module::RULE_GROUP_BACKEND => [
