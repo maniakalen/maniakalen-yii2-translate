@@ -58,7 +58,7 @@ class Module extends BaseModule implements BootstrapInterface
         define('MANIAKALEN_I18N_TRANSLATE', 1);
         Yii::setAlias('@translations', dirname(__FILE__));
         $config = include Yii::getAlias('@translations/config/main.php');
-        Yii::configure($this, $config);
+        Yii::configure($this, ArrayHelper::merge($config, $this));
         if (!$this->controllerNamespace) {
             $this->controllerNamespace = 'maniakalen\i18n\controllers';
         }
