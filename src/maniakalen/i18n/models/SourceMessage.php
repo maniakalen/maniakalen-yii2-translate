@@ -69,8 +69,8 @@ class SourceMessage extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category' => 'Category',
-            'message' => 'Label',
+            'category' => \Yii::t('mi18n', 'Category'),
+            'message' => \Yii::t('mi18n', 'Label'),
         ];
     }
 

@@ -68,9 +68,9 @@ class Languages extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'language_code' => 'Language Code',
-            'language' => 'Language',
-            'status' => 'Status',
+            'language_code' => \Yii::t('mi18n', 'Language Code'),
+            'language' => \Yii::t('mi18n', 'Language'),
+            'status' => \Yii::t('mi18n', 'Status'),
         ];
     }
 

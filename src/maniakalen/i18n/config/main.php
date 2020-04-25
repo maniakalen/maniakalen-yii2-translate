@@ -31,6 +31,11 @@ return [
             'translations/admin/languages-update' => '{module}/admin/languages-update',
             'translations/admin/languages-add' => '{module}/admin/languages-add',
             'translations/admin/languages-delete' => '{module}/admin/languages-delete',
+
+            'translations/admin/translations' => '{module}/admin/translations',
+            'translations/admin/translations-update' => '{module}/admin/translations-update',
+            'translations/admin/translations-add' => '{module}/admin/translations-add',
+            'translations/admin/translations-delete' => '{module}/admin/translations-delete',
         ],
         \maniakalen\i18n\Module::RULE_GROUP_FRONTEND => [
             'translations/json' => '{module}/translations/json'

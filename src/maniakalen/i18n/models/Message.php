@@ -83,8 +83,8 @@ class Message extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'language' => 'Language',
-            'translation' => 'Translation',
+            'language' => \Yii::t('mi18n', 'Language'),
+            'translation' => \Yii::t('mi18n', 'Translation'),
         ];
     }
 
