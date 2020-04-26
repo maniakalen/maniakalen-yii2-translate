@@ -34,6 +34,13 @@ use yii\helpers\Url;
  */
 class LanguagesAdminManager extends Component
 {
+    public $template = '<div class="icoBox">{update}&nbsp;{delete}&nbsp;{status}</div>';
+
+    public $editButtonTemplate = '<span class="glyphicon glyphicon-pencil"></span>';
+    public $deleteButtonTemplate = '<span class="glyphicon glyphicon-trash"></span>';
+
+    public $statusEnableButtonTemplate = '<span class="glyphicon glyphicon-ban-circle"></span>';
+    public $statusDisableButtonTemplate = '<span class="glyphicon glyphicon-ok-circle"></span>';
     /**
      * Gemerates and configures new Languages model
      *
@@ -88,37 +95,31 @@ class LanguagesAdminManager extends Component
             ],
             [
                 'class' => ActionColumn::className(),
-                'template' => '<div class="icoBox">{update}&nbsp;{delete}&nbsp;{status}</div>',
+                'template' => $this->template,
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            $this->editButtonTemplate,
                             $this->getLanguageEditUrl($model),
                             []
                         );
                     },
                     'delete' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-trash"></span>',
+                            $this->deleteButtonTemplate,
                             $this->getLanguageDeleteUrl($model),
                             []
                         );
                     },
                     'status' => function ($url, $model) {
-                        if ($model->status == 1) {
-                            $title = Yii::t('yii', 'Disable');
-                            $class = 'glyphicon-ok-circle';
-                        } else {
-                            $title = Yii::t('yii', 'Activate');
-                            $class = 'glyphicon-ban-circle';
-                        }
+                        $title = $this->status?Yii::t('yii', 'Disable'):Yii::t('yii', 'Activate');
                         $options = [
                             'title' => $title,
                             'aria-label' => $title,
                             'id' => 'status_control_' . $model->id,
                         ];
                         return Html::a(
-                            '<span class="glyphicon ' . $class . '"></span>',
+                            $this->status?$this->statusDisableButtonTemplate:$this->statusEnableButtonTemplate,
                             $this->getLanguageStatusToggleUrl($model),
                             $options
                         );

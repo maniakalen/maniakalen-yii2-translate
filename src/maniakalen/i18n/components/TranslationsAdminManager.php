@@ -35,7 +35,10 @@ use yii\helpers\ArrayHelper;
  */
 class TranslationsAdminManager
 {
+    public $template = '<div class="icoBox">{update}&nbsp;{delete}</div>';
 
+    public $editButtonTemplate = '<span class="glyphicon glyphicon-pencil"></span>';
+    public $deleteButtonTemplate = '<span class="glyphicon glyphicon-trash"></span>';
     /**
      * Returns an instance of Translations model
      *
@@ -97,18 +100,18 @@ class TranslationsAdminManager
             'message',
             [
                 'class' => ActionColumn::className(),
-                'template' => '<div class="icoBox">{update}&nbsp;{delete}</div>',
+                'template' => $this->template,
                 'buttons' => [
                     'update' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-pencil"></span>',
+                            $this->editButtonTemplate,
                             $this->getTranslationEditUrl($model),
                             []
                         );
                     },
                     'delete' => function ($url, $model) {
                         return Html::a(
-                            '<span class="glyphicon glyphicon-trash"></span>',
+                            $this->deleteButtonTemplate,
                             $this->getTranslationDeleteUrl($model),
                             []
                         );
