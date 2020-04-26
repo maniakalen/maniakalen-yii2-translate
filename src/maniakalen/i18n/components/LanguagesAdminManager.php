@@ -82,7 +82,7 @@ class LanguagesAdminManager extends Component
             'language_code',
             'language',
             [
-                'label' => 'status',
+                'label' => \Yii::t('mi18n', 'Status'),
                 'attribute' => 'status',
                 'value' => function ($m) {
                     return $m->status?'Active': 'Disabled';
