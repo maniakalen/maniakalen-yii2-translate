@@ -112,14 +112,14 @@ class LanguagesAdminManager extends Component
                         );
                     },
                     'status' => function ($url, $model) {
-                        $title = $this->status?Yii::t('yii', 'Disable'):Yii::t('yii', 'Activate');
+                        $title = $model->status?Yii::t('yii', 'Disable'):Yii::t('yii', 'Activate');
                         $options = [
                             'title' => $title,
                             'aria-label' => $title,
                             'id' => 'status_control_' . $model->id,
                         ];
                         return Html::a(
-                            $this->status?$this->statusDisableButtonTemplate:$this->statusEnableButtonTemplate,
+                            $model->status?$this->statusDisableButtonTemplate:$this->statusEnableButtonTemplate,
                             $this->getLanguageStatusToggleUrl($model),
                             $options
                         );
