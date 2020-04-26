@@ -29,7 +29,9 @@ foreach ($messages as $msg) {
     $tabs[] = [
         'label' => strtoupper($msg->language),
         'content' => $form->field($msg, "[{$msg->language}]translation")->textarea(),
-        'active' => empty($tabs)
+        'active' => empty($tabs),
+        'headerOptions' => ['class' => 'nav-item'],
+        'linkOptions' => ['class' => 'nav-link ' . (empty($tabs)?'active':'')],
     ];
 }
 echo Tabs::widget(['items' => $tabs]);
